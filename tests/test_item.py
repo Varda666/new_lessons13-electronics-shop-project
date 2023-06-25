@@ -1,6 +1,6 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
 import pytest
-from src import item
+from electronics_shop.src import item
 
 @pytest.fixture
 def item1():
@@ -18,3 +18,16 @@ def test_calculate_total_price(item1):
 def test_apply_discount(item2):
     item2.pay_rate = 0.75
     assert item.Item.apply_discount(item2) == 30000
+
+def test_instantiate_from_csv():
+    pass
+
+
+
+
+def test_string_to_number():
+    assert item.Item.string_to_number('24') == 24
+    assert item.Item.string_to_number('28.2') == 28
+
+    with pytest.raises(ValueError):
+        item.Item.string_to_number('dfg.2')
