@@ -1,4 +1,5 @@
 import csv
+import json
 
 
 
@@ -8,6 +9,7 @@ class Item:
     """
     pay_rate = 1.0
     all = []
+    all_prod = []
 
 
 
@@ -28,14 +30,19 @@ class Item:
 
         @property
         def name(self):
-            return self.__name
+            return f'{self.__name}'
 
         @name.setter
         def name(self, name: str):
-            if len(name) <= 10:
-                self.__name = name
-            else:
-                self.__name = name[:10]
+            # if len(name) < 10:
+            #     self.__name = name
+            #     return self.__name
+            # else:
+            self.__name = name[:10]
+
+
+    # def printing_name(self):
+    #     print(self.__name)
 
 
     def calculate_total_price(self) -> float:
@@ -57,12 +64,15 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls):
         """класс-метод, инициализирующий экземпляры класса `Item` данными из файла"""
+        cls.all = []
         with open("..\\src\\items.csv", newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 item_string = f'{row["name"]} {row["price"]} {row["quantity"]}'
-                name, price, quantity = item_string.split(' ')
-                return cls(name, price, quantity)
+                __name, price, quantity = item_string.split(' ')
+                cls.all.append(cls(__name, price, quantity))
+        return cls.all
+
 
     @staticmethod
     def string_to_number(number_str):
@@ -72,8 +82,6 @@ class Item:
             return int(int_part)
         else:
             return int(number_str)
-
-
 
 
 
