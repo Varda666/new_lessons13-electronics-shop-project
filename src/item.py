@@ -28,17 +28,17 @@ class Item:
         self.all.append(self)
 
 
-        @property
-        def name(self):
-            return f'{self.__name}'
+    @property
+    def name(self):
+        return f'{self.__name}'
 
-        @name.setter
-        def name(self, name: str):
+    @name.setter
+    def name(self, name: str):
             # if len(name) < 10:
             #     self.__name = name
             #     return self.__name
             # else:
-            self.__name = name[:10]
+        self.__name = name[:10]
 
 
     # def printing_name(self):
@@ -70,7 +70,7 @@ class Item:
             for row in reader:
                 item_string = f'{row["name"]} {row["price"]} {row["quantity"]}'
                 __name, price, quantity = item_string.split(' ')
-                cls.all.append(cls(__name, price, quantity))
+                cls(__name, price, quantity)
         return cls.all
 
 
