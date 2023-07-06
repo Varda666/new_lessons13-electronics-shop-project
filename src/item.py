@@ -89,5 +89,7 @@ class Item:
         else:
             return int(number_str)
 
-
+    def __add__(self, other):
+        """Складывает экземпляры класса `Phone` и `Item` по количеству товара в магазине"""
+        return self.quantity + other.quantity
 
