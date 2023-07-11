@@ -22,10 +22,12 @@ class Item:
         :param price: Цена за единицу товара.
         :param quantity: Количество товара в магазине.
         """
+        super().__init__()
         self.__name = name
         self.price = price
         self.quantity = quantity
         self.all.append(self)
+
 
     def __repr__(self):
         return f"{self.__class__.__name__}('{self.__name}', {self.price}, {self.quantity})"
@@ -92,4 +94,6 @@ class Item:
     def __add__(self, other):
         """Складывает экземпляры класса `Phone` и `Item` по количеству товара в магазине"""
         return self.quantity + other.quantity
+
+
 
