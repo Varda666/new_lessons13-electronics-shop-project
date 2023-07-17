@@ -47,3 +47,11 @@ def test_string_to_number():
 
 def test__add__(item4, item3):
     assert item.Item.__add__(item4, item3) == 25
+
+
+def test_instantiate_from_csv():
+    with pytest.raises(item.InstantiateCSVError, match='_Файл item.csv поврежден_'):
+        item.Item.instantiate_from_csv()
+
+
+
