@@ -1,6 +1,13 @@
 import csv
 import json
 
+class InstantiateCSVError(Exception):
+    def __init__(self, *args, **kwargs):
+        self.message = '_Файл item.csv поврежден_'
+
+    def __str__(self):
+        return self.message
+
 
 
 class Item:
@@ -72,14 +79,24 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls):
         """класс-метод, инициализирующий экземпляры класса `Item` данными из файла"""
-        cls.all = []
-        with open("..\\src\\items.csv", newline='') as csvfile:
-            reader = csv.DictReader(csvfile)
-            for row in reader:
-                item_string = f'{row["name"]} {row["price"]} {row["quantity"]}'
-                __name, price, quantity = item_string.split(' ')
-                cls(__name, price, quantity)
-        return cls.all
+        try:
+            cls.all = []
+            with open("../src/items.csv", newline='') as csvfile:
+                reader = csv.DictReader(csvfile)
+                for row in reader:
+                    if not row["name"]:
+                        raise InstantiateCSVError
+                    if not row["price"]:
+                        raise InstantiateCSVError
+                    if not row["quantity"]:
+                        raise InstantiateCSVError
+                    else:
+                        item_string = f'{row["name"]} {row["price"]} {row["quantity"]}'
+                        __name, price, quantity = item_string.split(' ')
+                        cls(__name, price, quantity)
+                return cls.all
+        except FileNotFoundError:
+            print('_Отсутствует файл item.csv_')
 
 
     @staticmethod
