@@ -29,7 +29,7 @@ class Item:
         :param price: Цена за единицу товара.
         :param quantity: Количество товара в магазине.
         """
-        super().__init__()
+
         self.__name = name
         self.price = price
         self.quantity = quantity
@@ -84,16 +84,12 @@ class Item:
             with open("../src/items.csv", newline='') as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
-                    if not row["name"]:
-                        raise InstantiateCSVError
-                    if not row["price"]:
-                        raise InstantiateCSVError
-                    if not row["quantity"]:
+                    if set(row) != {'name', 'price', 'quantity'}:
                         raise InstantiateCSVError
                     else:
                         item_string = f'{row["name"]} {row["price"]} {row["quantity"]}'
                         __name, price, quantity = item_string.split(' ')
-                        cls(__name, price, quantity)
+                        cls(__name, float(price), int(quantity))
                 return cls.all
         except FileNotFoundError:
             print('_Отсутствует файл item.csv_')
